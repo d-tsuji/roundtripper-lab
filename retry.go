@@ -1,4 +1,4 @@
-package roundtripper_lab
+package sample
 
 import (
 	"io"
