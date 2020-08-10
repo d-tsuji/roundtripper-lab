@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// NewRetryableRoundTripper gets a retryable http.RoundTripper.
 func NewRetryableRoundTripper(tr http.RoundTripper, attempts int) http.RoundTripper {
 	return &retryableRoundTripper{tr: tr, attempts: attempts}
 }

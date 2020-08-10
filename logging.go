@@ -6,6 +6,7 @@ import (
 	"net/http/httputil"
 )
 
+// NewLoggingRoundTripper gets the http.RoundTripper that can log the HTTP request / response.
 func NewLoggingRoundTripper(transport http.RoundTripper, logger func(string, ...interface{})) http.RoundTripper {
 	return &loggingRoundTripper{transport: transport, logger: logger}
 }
