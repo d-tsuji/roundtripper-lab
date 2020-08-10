@@ -6,29 +6,30 @@ import (
 	"net/http/httputil"
 )
 
+func NewLoggingRoundTripper(transport http.RoundTripper, logger func(string, ...interface{})) http.RoundTripper {
+	return &loggingRoundTripper{transport: transport, logger: logger}
+}
+
 type loggingRoundTripper struct {
-	Transport http.RoundTripper
-	Logger    func(string, ...interface{})
+	transport http.RoundTripper
+	logger    func(string, ...interface{})
 }
 
 func (lrt *loggingRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
-	if lrt.Logger == nil {
-		lrt.Logger = log.Printf
+	if lrt.logger == nil {
+		lrt.logger = log.Printf
 	}
 
-	dump, err := httputil.DumpRequestOut(req, true)
-	if err != nil {
-		lrt.Logger("Could not dump request: %s", err)
+	if dump, err := httputil.DumpRequestOut(req, true); err == nil {
+		lrt.logger("Send request: %s", string(dump))
 	}
-	lrt.Logger("Send request: %s", string(dump))
 
-	res, err := lrt.Transport.RoundTrip(req)
-
-	dump, err = httputil.DumpResponse(res, true)
-	if err != nil {
-		lrt.Logger("Could not dump response: %s", err)
+	resp, err := lrt.transport.RoundTrip(req)
+	if resp != nil {
+		if dump, err := httputil.DumpResponse(resp, true); err == nil {
+			lrt.logger("Received response: %s", string(dump))
+		}
 	}
-	lrt.Logger("Received response: %s", string(dump))
 
-	return res, err
+	return resp, err
 }

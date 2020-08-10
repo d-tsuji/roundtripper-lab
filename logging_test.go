@@ -18,8 +18,8 @@ func TestRoundTripperLogging(t *testing.T) {
 	log := zerolog.New(os.Stderr).With().Timestamp().Logger()
 	client := &http.Client{
 		Transport: &loggingRoundTripper{
-			Transport: http.DefaultTransport,
-			Logger:    log.Printf,
+			transport: http.DefaultTransport,
+			logger:    log.Printf,
 		},
 	}
 

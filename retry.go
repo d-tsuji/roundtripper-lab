@@ -7,6 +7,10 @@ import (
 	"net/http"
 )
 
+func NewRetryableRoundTripper(tr http.RoundTripper, attempts int) http.RoundTripper {
+	return &retryableRoundTripper{tr: tr, attempts: attempts}
+}
+
 type retryableRoundTripper struct {
 	tr       http.RoundTripper
 	attempts int
