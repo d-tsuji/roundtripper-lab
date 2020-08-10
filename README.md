@@ -1,6 +1,6 @@
 # RoundTripper Lab [![Go Report Card](https://goreportcard.com/badge/github.com/d-tsuji/roundtripper-lab)](https://goreportcard.com/report/github.com/d-tsuji/roundtripper-lab) [![Actions Status](https://github.com/d-tsuji/roundtripper-lab/workflows/CI/badge.svg)](https://github.com/d-tsuji/roundtripper-lab/actions)
 
-This repository describes the implementation patterns of RoundTripper.
+This repository describes the implementation patterns of [http.RoundTripper](https://golang.org/pkg/net/http/#RoundTripper).
 
 ## LICENSE
 
